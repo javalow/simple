@@ -1,10 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { Nav, Platform, MenuController } from 'ionic-angular';
+import { Intercom } from '@ionic-native/intercom';
+import { AuthService } from '../providers/auth/auth';
+
+
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { LoginPage } from '../pages/login/login';
+
+declare var cordova:any;
 
 @Component({
   templateUrl: 'app.html'
@@ -12,11 +17,12 @@ import { ListPage } from '../pages/list/list';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = LoginPage;
 
   pages: Array<{title: string, component: any}>;
+  private menu: MenuController;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public intercom: Intercom, private auth: AuthService, menu: MenuController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -31,9 +37,28 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+
+
     });
+    this.auth.afAuth.authState
+      			.subscribe(
+      				user => {
+      					if (user) {
+      						this.rootPage = HomePage;
+                  console.log('signed in user:');
+                  console.log(user.email);
+                  cordova.plugins.intercom.registerIdentifiedUser({email: user.email});
+                  console.log('intercom register user');
+                  cordova.plugins.intercom.registerForPush();
+                  console.log('intercom register for push');
+      					} else {
+      						this.rootPage = LoginPage;
+      					}
+      				},
+      				() => {
+      					this.rootPage = LoginPage;
+      				}
+      			);
   }
 
   openPage(page) {
@@ -41,4 +66,18 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+  logout() {
+      		// this.menu.close();
+
+      		this.auth.signOut();
+
+      		this.nav.setRoot(LoginPage);
+      	}
+
+  	login() {
+  		// this.menu.close();
+
+  		this.auth.signOut();
+  		this.nav.setRoot(LoginPage);
+  	}
 }
