@@ -8,6 +8,7 @@ import { AuthService } from '../providers/auth/auth';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
+import { GardenPage } from '../pages/garden/garden';
 
 declare var cordova:any;
 
@@ -19,16 +20,16 @@ export class MyApp {
 
   rootPage: any = LoginPage;
 
-  pages: Array<{title: string, component: any}>;
-  private menu: MenuController;
+  pages: Array<{title: string, component: any, icon: any}>;
 
-  constructor(public platform: Platform, public intercom: Intercom, private auth: AuthService, menu: MenuController) {
+  constructor(public platform: Platform, public intercom: Intercom, private auth: AuthService, public menu: MenuController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'Home', component: HomePage, icon: 'leaf' },
+      { title: 'List', component: ListPage, icon: 'paper' },
+      { title: 'Garden', component: GardenPage, icon: 'ios-chatbubbles-outline' }
     ];
 
   }
@@ -67,7 +68,7 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
   logout() {
-      		// this.menu.close();
+      		this.menu.close();
 
       		this.auth.signOut();
 
@@ -75,7 +76,7 @@ export class MyApp {
       	}
 
   	login() {
-  		// this.menu.close();
+  		this.menu.close();
 
   		this.auth.signOut();
   		this.nav.setRoot(LoginPage);

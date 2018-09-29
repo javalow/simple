@@ -8,6 +8,7 @@
   <ion-content>
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon [name]="p.icon" item-left></ion-icon>
         {{p.title}}
       </button>
       <ion-list-header *ngIf="auth.getEmail()">{{auth.getEmail()}}</ion-list-header>
@@ -17,10 +18,10 @@
       				Log out
       			</ion-item>
 
-      			<ion-item (click)="login()" *ngIf="!auth.authenticated">
+      			<!-- <ion-item (click)="login()" *ngIf="!auth.authenticated">
       				<ion-icon name="log-in" item-left></ion-icon>
       				Log in
-      			</ion-item>
+      			</ion-item> -->
     </ion-list>
   </ion-content>
 

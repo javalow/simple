@@ -13,11 +13,13 @@ export class HomePage {
 
   }
   ionViewDidLoad() {
-      this.intercom.setLauncherVisibility('VISIBLE');
-      console.log("Intercom alive!");
+      // this.intercom.setLauncherVisibility('VISIBLE');
+      // this.intercom.displayMessenger();
+      console.log("Page loaded - no messenger display");
     }
 
 icmsg(){
   this.intercom.displayMessenger();
+  console.log("Intercom display Messenger");
 }
 }

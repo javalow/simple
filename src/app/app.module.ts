@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
+import { GardenPage } from '../pages/garden/garden';
 
 import { AuthService } from '../providers/auth/auth';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -20,7 +21,8 @@ import { Intercom } from '@ionic-native/intercom';
     MyApp,
     HomePage,
     ListPage,
-    LoginPage
+    LoginPage,
+    GardenPage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { Intercom } from '@ionic-native/intercom';
     MyApp,
     HomePage,
     ListPage,
-    LoginPage
+    LoginPage,
+    GardenPage
   ],
   providers: [
 
