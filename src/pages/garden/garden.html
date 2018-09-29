@@ -21,4 +21,18 @@
         {{ item.title }}
       </ion-item>
     </ion-list>
+    <h2>Client Details</h2>
+    <p></p>
+      <ion-list>
+        <ion-item *ngFor="let cd of clientDeets">
+      {{ cd.firstName }} {{ cd.lastName }}<br>
+        Phone: {{ cd.phoneNumber }}<br>
+        Email: {{ cd.email }}
+        </ion-item>
+      </ion-list>
 </ion-content>
+<!-- {{ clientDeets.first }} {{ clientDeets.last }}
+Address: {{ clientDeets.address }} -->
+<!-- Zip: {{ clientDeets.Zip}} -->
+<!-- Garden size: {{ clientDeets.numbeds  clientDeets.size}}
+Start Date: {{ clientDeets.startdate}} -->

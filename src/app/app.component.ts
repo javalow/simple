@@ -22,7 +22,11 @@ export class MyApp {
 
   pages: Array<{title: string, component: any, icon: any}>;
 
-  constructor(public platform: Platform, public intercom: Intercom, private auth: AuthService, public menu: MenuController) {
+  constructor(
+    public platform: Platform,
+    public intercom: Intercom,
+    private auth: AuthService,
+    public menu: MenuController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
