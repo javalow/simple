@@ -14,5 +14,11 @@
 
 
 <ion-content padding>
-
+  <h2>Available Products</h2>
+  <p></p>
+    <ion-list>
+      <ion-item *ngFor="let item of items">
+        {{ item.title }}
+      </ion-item>
+    </ion-list>
 </ion-content>
