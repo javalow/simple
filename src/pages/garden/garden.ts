@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 // import { Intercom } from '@ionic-native/intercom';
 import { AuthService } from '../../providers/auth/auth';
-import { DataProvider } from '../../providers/data/data';
+// import { DataProvider } from '../../providers/data/data';
 import * as firebase from 'firebase';
 // import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -26,9 +26,22 @@ export class GardenPage {
   public userDeets: any [] = [];
   public cdQ;
   public cdQ2;
+  public cdQ3;
+  public title: string="";
+  public numbeds:string="";
+  public address:string="";
+  public email:string="";
+  public email2:string="";
+  public hardware:string="";
+  public bedmap1:string="";
+  public bedmap2:string="";
+  public phoneNumber: string="";
+  public startdate: Date;
+  public details;
+  public id: string="";
 
-  // ListCategory = [];
-  // temparrUser= [];
+
+
 
   constructor(
     public navCtrl: NavController,
@@ -37,7 +50,7 @@ export class GardenPage {
     private auth: AuthService,
     // private intercom: Intercom,
     private db: AngularFireDatabase,
-    private data: DataProvider,
+    // private data: DataProvider,
     // public toastCtrl: ToastController
   )
     {
@@ -48,14 +61,14 @@ export class GardenPage {
     console.log('ionViewDidLoad GardenPage');
     this.email$ = this.auth.getEmailOnly();
     console.log(this.email$);
-    this.itemRef = firebase.database().ref('/ftuserprofiles').on('value', itemSnapshot => {
-      this.items = [];
-      itemSnapshot.forEach( itemSnap => {
-        this.items.push(itemSnap.key
-        );
-        return false;
-      });
-    });
+    // this.itemRef = firebase.database().ref('/ftuserprofiles').on('value', itemSnapshot => {
+    //   this.items = [];
+    //   itemSnapshot.forEach( itemSnap => {
+    //     this.items.push(itemSnap.key
+    //     );
+    //     return false;
+    //   });
+    // });
 
     this.cdQ = firebase.database().ref('/ftuserprofiles').orderByChild('email').equalTo(this.email$).once('value', itemSnapshot => {
       this.clientDeets = [];
@@ -73,20 +86,42 @@ export class GardenPage {
         return false;
       });
     });
-    this.cdQ2 = firebase.database().ref('/ftuserprofiles').orderByChild('email')
-                .equalTo(this.email$).once('value').then(function(snapshot) {
-                  var title = snapshot.child("title").val();
-                  var address = snapshot.child("address").val();
-                  var email = snapshot.child("email").val();
-                  var email2 = snapshot.child("email2").val();
-                  var numbeds = snapshot.child("numbeds").val();
-                  var hardware = snapshot.child("hardware").val();
-                  var startdate = snapshot.child("startdate").val();
-                  var bedmap1 = snapshot.child("bedmap").child("0").child("url").val();
-                  var bedmap2 = snapshot.child("bedmap").child("1").child("url").val();
+
+    this.cdQ2 = firebase.database().ref('/ftuserprofiles').orderByChild('email').equalTo(this.email$);
+    this.details = this.cdQ2.once('value').then((snapshot) => {
+      this.userDeets = [];
+      snapshot.forEach( snap => {
+          this.id = snap.key;
+                  console.log(snap.key);
+                  return false;
                 });
 
+                console.log('loggedin user id: ' + this.id);
 
+
+});
+  this.cdQ3 = firebase.database().ref('/ftuserprofiles/' + this.id).on('value', itemSnapshot => {
+    this.items = [];
+    itemSnapshot.forEach(itemSnap => {
+      this.items.push(
+        this.title = itemSnap.child("title").val(),
+        this.address = itemSnap.child("address").val(),
+        this.email = itemSnap.child("email").val(),
+        this.email2 = itemSnap.child("email2").val(),
+        this.numbeds = itemSnap.child("numbeds").val(),
+        this.hardware = itemSnap.child("hardware").val(),
+        this.phoneNumber = itemSnap.child("phoneNumber").val(),
+        this.startdate = itemSnap.child("startdate").val(),
+        this.bedmap1 = itemSnap.child("bedmap").child("0").child("url").val(),
+        this.bedmap2 = itemSnap.child("bedmap").child("1").child("url").val(),
+  );
+});
+console.log('title: ' + this.title);
+console.log('Alt email: ' + this.email2);
+});
+
+}
+}
 
     // this.intercom.hideMessenger();
   //   this.itemRef.on('value', itemSnapshot => {
@@ -98,6 +133,15 @@ export class GardenPage {
   // });
 
     // this.data.getUserProfile();
+    // this.title = snapshot.child(id+"/title").val();
+    // this.address = snapshot.child("address").val();
+    // this.email = snapshot.child("email").val();
+    // this.email2 = snapshot.child("email2").val();
+    // this.numbeds = snapshot.child("numbeds").val();
+    // this.hardware = snapshot.child("hardware").val();
+    // this.startdate = snapshot.child("startdate").val();
+    // this.bedmap1 = snapshot.child("bedmap").child("0").child("url").val();
+    // this.bedmap2 = snapshot.child("bedmap").child("1").child("url").val();
 
 
     // this.email = this.auth.getEmailOnly();
@@ -113,11 +157,11 @@ export class GardenPage {
     //
     // })
 
-    }
 
 
 
-}
+
+
 //     class data {
 //       public email$ = this.auth.getEmailOnly();
 //       // public items: any [] = [];

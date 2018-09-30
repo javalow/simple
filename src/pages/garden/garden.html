@@ -14,14 +14,17 @@
 
 
 <ion-content padding>
-  <h2>Available Products</h2>
+  <h2>Ordered Data Snapshot</h2>
   <p></p>
-    <ion-list>
-      <ion-item *ngFor="let item of items">
-        {{ item }}
-      </ion-item>
-    </ion-list>
-    <h2>Client Details</h2>
+  <h3>Name: {{this?.title}} <br></h3>
+  Email: {{this?.email}} <br>
+  Phone: {{this?.phoneNumber}} <br>
+  Phone: {{this?.phoneNumber}} <br>
+  <h3>Garden Details</h3>
+  Started On: {{this?.startdate}} <br>
+  Garden Size: {{this?.numbeds}} {{this?.hardware}} Beds<br>
+
+    <h2>Client Details Push</h2>
     <p></p>
 
 
