@@ -15,6 +15,7 @@ import { AngularFireModule } from '@angular/fire';
 import { config } from '../environments/environment.prod';
 
 import { Intercom } from '@ionic-native/intercom';
+// import { DataProvider } from '../providers/data/data';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { Intercom } from '@ionic-native/intercom';
     AuthService,
 		AngularFireAuth,
 		AngularFireDatabase,
-    Intercom
+    Intercom,
+    // DataProvider
   ]
 })
 export class AppModule {}
