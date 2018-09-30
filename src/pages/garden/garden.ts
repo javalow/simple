@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
-import { Intercom } from '@ionic-native/intercom';
+import { NavController, NavParams } from 'ionic-angular';
+// import { Intercom } from '@ionic-native/intercom';
 import { AuthService } from '../../providers/auth/auth';
-// import { DataProvider } from '../../providers/data/data';
+import { DataProvider } from '../../providers/data/data';
 import * as firebase from 'firebase';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+// import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 
 @Component({
@@ -15,40 +15,57 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 export class GardenPage {
   // public email;
   public items: any [] = [];
-  public itemRef: firebase.database.Reference = firebase.database().ref('/ftproducts');
-  public email$ = this.auth.getEmailOnly();
+  public itemRef;
+  // public email$ = this.auth.getEmailOnly();
+  public email$;
   // public items: any [] = [];
-  public cdRef: firebase.database.Query = firebase.database().ref('/ftuserprofiles/').equalTo(this.email$);
-
+  // public cdRef: firebase.database.Query = firebase.database().ref('/ftuserprofiles/').orderByChild('email').equalTo(this.email$);
+  // public cdRef: firebase.database.Reference = firebase.database().ref('/ftuserprofiles/2a2a18f2-49e6-3daf-9208-ef3f67c15e12');
 
   // public clientDeets: any [] = [];
   // public cdRef: firebase.database.Reference = firebase.database().ref('/ftuserprofiles');
   // public cdQ;
+  ListCategory = [];
+  temparrUser= [];
 
   constructor(
     public navCtrl: NavController,
     // public http: HttpClient,
     public navParams: NavParams,
     private auth: AuthService,
-    private intercom: Intercom,
+    // private intercom: Intercom,
     private db: AngularFireDatabase,
-    public toastCtrl: ToastController
+    private data: DataProvider,
+    // public toastCtrl: ToastController
   )
     {
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad GardenPage');
-    // this.intercom.hideMessenger();
-    this.itemRef.on('value', itemSnapshot => {
-    this.items = [];
-    itemSnapshot.forEach( itemSnap => {
-      this.items.push(itemSnap.val());
-      return false;
+    this.email$ = this.auth.getEmailOnly();
+    console.log(this.email$);
+    this.itemRef = firebase.database().ref('/ftuserprofiles').on('value', itemSnapshot => {
+      this.items = [];
+      itemSnapshot.forEach( itemSnap => {
+        this.items.push(itemSnap.val().numbeds,
+        itemSnap.key,
+        itemSnap.val().hardware
+      );
+        return false;
+      });
     });
-  });
-    console.log('user details');
-    // data.getUserProfile();
+    // this.intercom.hideMessenger();
+  //   this.itemRef.on('value', itemSnapshot => {
+  //   this.items = [];
+  //   itemSnapshot.forEach( itemSnap => {
+  //     this.items.push(itemSnap.val());
+  //     return false;
+  //   });
+  // });
+    // console.log(this.items[0].numbeds);
+    // this.data.getUserProfile();
 
 
     // this.email = this.auth.getEmailOnly();
@@ -67,20 +84,22 @@ export class GardenPage {
     }
     getUserProfile() {
 
-      var ref = this.itemRef.on("value", (snapshot) => {
-        let cd = snapshot.val();
-        var name = snapshot.child("title").val();
-        var address = snapshot.child("address").val();
-        var email = snapshot.child("email").val();
-        // console.log({name,address,email});
-        const toast = this.toastCtrl.create({
-              message: name + ' ' + email,
-              duration: 4000
-            });
-            toast.present();
-      });
+        this.data.getUserProfile().then((res: any) => {
+            this.ListCategory = res;
+             this.temparrUser = res;
+             console.log(this.temparrUser);
+         })
 
-}
+//
+//       // var ref = this.cdRef.on("value", (snapshot) => {
+//         // let cd = snapshot.val();
+//         // var name = snapshot.child("title").val();
+//         // var address = snapshot.child("address").val();
+//         // var email = snapshot.child("email").val();
+
+      }
+
+
 }
 //     class data {
 //       public email$ = this.auth.getEmailOnly();

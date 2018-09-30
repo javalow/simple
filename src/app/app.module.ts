@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -15,7 +16,7 @@ import { AngularFireModule } from '@angular/fire';
 import { config } from '../environments/environment.prod';
 
 import { Intercom } from '@ionic-native/intercom';
-// import { DataProvider } from '../providers/data/data';
+import { DataProvider } from '../providers/data/data';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { Intercom } from '@ionic-native/intercom';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config.fire),
 
@@ -46,7 +48,7 @@ import { Intercom } from '@ionic-native/intercom';
 		AngularFireAuth,
 		AngularFireDatabase,
     Intercom,
-    // DataProvider
+    DataProvider
   ]
 })
 export class AppModule {}

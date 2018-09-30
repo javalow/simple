@@ -3,7 +3,7 @@
     <name>Garden Coach</name>
     <description>Avalow Garden Education Platform</description>
     <author email="grow@avalow.com" href="http://avalow.com/">GrowTeam</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.0.105:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -86,6 +86,7 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^2.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-intercom" spec="^6.1.0" />
+    <allow-navigation href="http://192.168.0.105:8100" sessionid="953d4329" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="^7.1.1" />
 </widget>
