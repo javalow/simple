@@ -23,15 +23,15 @@
     </ion-list>
     <h2>Client Details</h2>
     <p></p>
-    <button ion-button round (click)="getUserProfile()">profile data</button>
-<!-- {{ref.name}} -->
-      <!-- <ion-list>
-        <ion-item *ngFor="let profile of userprofiles">
-      {{ profile.firstName }} {{ profile.lastName }}<br>
-        Phone: {{ cd.phoneNumber }}<br>
-        Email: {{ cd.email }}
+
+
+      <ion-list>
+        <ion-item *ngFor="let cd of clientDeets">
+      <!-- {{ profile.firstName }} {{ profile.lastName }}<br> -->
+        {{ cd }}
+
         </ion-item>
-      </ion-list> -->
+      </ion-list>
 </ion-content>
 
 <!-- {{ clientDeets.first }} {{ clientDeets.last }}

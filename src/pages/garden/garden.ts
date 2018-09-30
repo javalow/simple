@@ -22,11 +22,13 @@ export class GardenPage {
   // public cdRef: firebase.database.Query = firebase.database().ref('/ftuserprofiles/').orderByChild('email').equalTo(this.email$);
   // public cdRef: firebase.database.Reference = firebase.database().ref('/ftuserprofiles/2a2a18f2-49e6-3daf-9208-ef3f67c15e12');
 
-  // public clientDeets: any [] = [];
-  // public cdRef: firebase.database.Reference = firebase.database().ref('/ftuserprofiles');
-  // public cdQ;
-  ListCategory = [];
-  temparrUser= [];
+  public clientDeets: any [] = [];
+  public userDeets: any [] = [];
+  public cdQ;
+  public cdQ2;
+
+  // ListCategory = [];
+  // temparrUser= [];
 
   constructor(
     public navCtrl: NavController,
@@ -49,13 +51,43 @@ export class GardenPage {
     this.itemRef = firebase.database().ref('/ftuserprofiles').on('value', itemSnapshot => {
       this.items = [];
       itemSnapshot.forEach( itemSnap => {
-        this.items.push(itemSnap.val().numbeds,
-        itemSnap.key,
-        itemSnap.val().hardware
-      );
+        this.items.push(itemSnap.key
+        );
         return false;
       });
     });
+
+    this.cdQ = firebase.database().ref('/ftuserprofiles').orderByChild('email').equalTo(this.email$).once('value', itemSnapshot => {
+      this.clientDeets = [];
+      itemSnapshot.forEach( itemSnap => {
+        this.clientDeets.push(
+          itemSnap.val().title,
+          itemSnap.val().address,
+          itemSnap.val().email,
+          itemSnap.val().numbeds,
+          itemSnap.val().hardware,
+          itemSnap.val().startdate,
+          itemSnap.val().bedmap
+      );
+
+        return false;
+      });
+    });
+    this.cdQ2 = firebase.database().ref('/ftuserprofiles').orderByChild('email')
+                .equalTo(this.email$).once('value').then(function(snapshot) {
+                  var title = snapshot.child("title").val();
+                  var address = snapshot.child("address").val();
+                  var email = snapshot.child("email").val();
+                  var email2 = snapshot.child("email2").val();
+                  var numbeds = snapshot.child("numbeds").val();
+                  var hardware = snapshot.child("hardware").val();
+                  var startdate = snapshot.child("startdate").val();
+                  var bedmap1 = snapshot.child("bedmap").child("0").child("url").val();
+                  var bedmap2 = snapshot.child("bedmap").child("1").child("url").val();
+                });
+
+
+
     // this.intercom.hideMessenger();
   //   this.itemRef.on('value', itemSnapshot => {
   //   this.items = [];
@@ -64,7 +96,7 @@ export class GardenPage {
   //     return false;
   //   });
   // });
-    // console.log(this.items[0].numbeds);
+
     // this.data.getUserProfile();
 
 
@@ -82,22 +114,7 @@ export class GardenPage {
     // })
 
     }
-    getUserProfile() {
 
-        this.data.getUserProfile().then((res: any) => {
-            this.ListCategory = res;
-             this.temparrUser = res;
-             console.log(this.temparrUser);
-         })
-
-//
-//       // var ref = this.cdRef.on("value", (snapshot) => {
-//         // let cd = snapshot.val();
-//         // var name = snapshot.child("title").val();
-//         // var address = snapshot.child("address").val();
-//         // var email = snapshot.child("email").val();
-
-      }
 
 
 }
