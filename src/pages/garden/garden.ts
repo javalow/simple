@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-// import { Intercom } from '@ionic-native/intercom';
+import { Intercom } from '@ionic-native/intercom';
 import { AuthService } from '../../providers/auth/auth';
-// import { DataProvider } from '../../providers/data/data';
+import { DataProvider } from '../../providers/data/data';
 import * as firebase from 'firebase';
 // import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { Observable } from 'rxjs/Observable';
 
 
 @Component({
@@ -13,13 +14,10 @@ import { AngularFireDatabase } from '@angular/fire/database';
   templateUrl: 'garden.html',
 })
 export class GardenPage {
-  // public email;
   public items: any [] = [];
   public itemRef;
-  // public email$ = this.auth.getEmailOnly();
   public email$;
-  // public items: any [] = [];
-  // public cdRef: firebase.database.Query = firebase.database().ref('/ftuserprofiles/').orderByChild('email').equalTo(this.email$);
+
   // public cdRef: firebase.database.Reference = firebase.database().ref('/ftuserprofiles/2a2a18f2-49e6-3daf-9208-ef3f67c15e12');
 
   public clientDeets: any [] = [];
@@ -27,6 +25,7 @@ export class GardenPage {
   public cdQ;
   public cdQ2;
   public cdQ3;
+  public cdQ4;
   public title: string="";
   public numbeds:string="";
   public address:string="";
@@ -38,6 +37,7 @@ export class GardenPage {
   public phoneNumber: string="";
   public startdate: Date;
   public details;
+  public fields;
   public id: string="";
 
 
@@ -48,44 +48,20 @@ export class GardenPage {
     // public http: HttpClient,
     public navParams: NavParams,
     private auth: AuthService,
-    // private intercom: Intercom,
+    private intercom: Intercom,
+    private data: DataProvider,
     private db: AngularFireDatabase,
-    // private data: DataProvider,
-    // public toastCtrl: ToastController
   )
     {
 
-  }
+    }
+
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad GardenPage');
     this.email$ = this.auth.getEmailOnly();
     console.log(this.email$);
-    // this.itemRef = firebase.database().ref('/ftuserprofiles').on('value', itemSnapshot => {
-    //   this.items = [];
-    //   itemSnapshot.forEach( itemSnap => {
-    //     this.items.push(itemSnap.key
-    //     );
-    //     return false;
-    //   });
-    // });
-
-    this.cdQ = firebase.database().ref('/ftuserprofiles').orderByChild('email').equalTo(this.email$).once('value', itemSnapshot => {
-      this.clientDeets = [];
-      itemSnapshot.forEach( itemSnap => {
-        this.clientDeets.push(
-          itemSnap.val().title,
-          itemSnap.val().address,
-          itemSnap.val().email,
-          itemSnap.val().numbeds,
-          itemSnap.val().hardware,
-          itemSnap.val().startdate,
-          itemSnap.val().bedmap
-      );
-
-        return false;
-      });
-    });
 
     this.cdQ2 = firebase.database().ref('/ftuserprofiles').orderByChild('email').equalTo(this.email$);
     this.details = this.cdQ2.once('value').then((snapshot) => {
@@ -100,8 +76,15 @@ export class GardenPage {
 
 
 });
+this.cdQ4 = this.db.object('/ftuserprofiles/'+this.id);
+this.title = this.cdQ4.title;
+console.log('title: ' + this.title);
+
   this.cdQ3 = firebase.database().ref('/ftuserprofiles/' + this.id).on('value', itemSnapshot => {
-    this.items = [];
+    if (this.email$ == this.email) {
+      console.log('same user, no call');
+    } else {
+      this.items = [];
     itemSnapshot.forEach(itemSnap => {
       this.items.push(
         this.title = itemSnap.child("title").val(),
@@ -112,36 +95,28 @@ export class GardenPage {
         this.hardware = itemSnap.child("hardware").val(),
         this.phoneNumber = itemSnap.child("phoneNumber").val(),
         this.startdate = itemSnap.child("startdate").val(),
-        this.bedmap1 = itemSnap.child("bedmap").child("0").child("url").val(),
-        this.bedmap2 = itemSnap.child("bedmap").child("1").child("url").val(),
+        this.bedmap1 = itemSnap.child("bedmap/0/url").val(),
+        this.bedmap2 = itemSnap.child("bedmap/1/url").val(),
   );
 });
+}
+
+
 console.log('title: ' + this.title);
 console.log('Alt email: ' + this.email2);
+console.log('bedmap url ' + this.bedmap2);
 });
+// this.cdQ = this.db.object('/ftuserprofiles/'+this.id);
+// snap.child("title").val()) );
 
+}
+icmsg(){
+  this.intercom.displayMessenger();
+  console.log("Intercom display Messenger");
 }
 }
 
-    // this.intercom.hideMessenger();
-  //   this.itemRef.on('value', itemSnapshot => {
-  //   this.items = [];
-  //   itemSnapshot.forEach( itemSnap => {
-  //     this.items.push(itemSnap.val());
-  //     return false;
-  //   });
-  // });
 
-    // this.data.getUserProfile();
-    // this.title = snapshot.child(id+"/title").val();
-    // this.address = snapshot.child("address").val();
-    // this.email = snapshot.child("email").val();
-    // this.email2 = snapshot.child("email2").val();
-    // this.numbeds = snapshot.child("numbeds").val();
-    // this.hardware = snapshot.child("hardware").val();
-    // this.startdate = snapshot.child("startdate").val();
-    // this.bedmap1 = snapshot.child("bedmap").child("0").child("url").val();
-    // this.bedmap2 = snapshot.child("bedmap").child("1").child("url").val();
 
 
     // this.email = this.auth.getEmailOnly();
@@ -158,7 +133,31 @@ console.log('Alt email: ' + this.email2);
     // })
 
 
+    // this.itemRef = firebase.database().ref('/ftuserprofiles').on('value', itemSnapshot => {
+    //   this.items = [];
+    //   itemSnapshot.forEach( itemSnap => {
+    //     this.items.push(itemSnap.key
+    //     );
+    //     return false;
+    //   });
+    // });
 
+    // this.cdQ = firebase.database().ref('/ftuserprofiles').orderByChild('email').equalTo(this.email$).once('value', itemSnapshot => {
+    //   this.clientDeets = [];
+    //   itemSnapshot.forEach( itemSnap => {
+    //     this.clientDeets.push(
+    //       itemSnap.val().title,
+    //       itemSnap.val().address,
+    //       itemSnap.val().email,
+    //       itemSnap.val().numbeds,
+    //       itemSnap.val().hardware,
+    //       itemSnap.val().startdate,
+    //       itemSnap.val().bedmap
+    //   );
+    //
+    //     return false;
+    //   });
+    // });
 
 
 
@@ -218,4 +217,3 @@ console.log('Alt email: ' + this.email2);
 //     return false;
 //   });
 //
-// })

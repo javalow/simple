@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Intercom } from '@ionic-native/intercom';
+import { Tile } from './models/tile.model';
+import { GardenPage } from '../garden/garden';
+import { NewsListPage } from '../news/news-list.page';
+
 
 
 @Component({
@@ -8,18 +11,67 @@ import { Intercom } from '@ionic-native/intercom';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  public tiles: Tile[][];
 
-  constructor(public navCtrl: NavController, private intercom: Intercom) {
+  	private nav;
 
+  	constructor(
+  		nav: NavController
+  	) {
+  		this.nav = nav;
+  		this.initTiles();
+  	}
+
+  	public navigateTo(tile) {
+  		this.nav.push(tile.component);
+  	}
+
+  	private initTiles(): void {
+  		this.tiles = [
+  			[
+  			// 	{
+  			// 		title: 'Garden Chat',
+  			// 		path: 'chat-rooms',
+  			// 		icon: 'menu',
+  			// 		component: ChatRoomsPage
+  			// 	},
+  			// 	{
+  			// 		title: 'Activity',
+  			// 		path: 'catalog-items',
+  			// 		icon: 'list-box',
+  			// 		component: CatalogItemsPage
+  			// 	}
+  			// ],
+  			// [
+  			// 	{
+  			// 	title: 'Products',
+  			// 	path: 'products',
+  			// 	icon: 'cart',
+  			// 	component: ProductsPage
+  			// },
+  			{
+  				title: 'Your Garden',
+  				path: 'user-profiles',
+  				icon: 'ios-chatbubbles-outline',
+  				component: GardenPage
+  			}
+  		],
+  			[
+  				{
+  					title: 'Garden Recipes & Tips',
+  					path: 'news',
+  					icon: 'paper',
+  					component: NewsListPage
+  				},
+  				// {
+  				// 	title: 'Garden Sharing',
+  				// 	path: 'activity-feed',
+  				// 	icon: 'list',
+  				// 	component: ActivityFeedPage
+  				// }
+  			],
+
+
+  		];
+  	}
   }
-  ionViewDidLoad() {
-      // this.intercom.setLauncherVisibility('VISIBLE');
-      // this.intercom.displayMessenger();
-      console.log("Page loaded - no messenger display");
-    }
-
-icmsg(){
-  this.intercom.displayMessenger();
-  console.log("Intercom display Messenger");
-}
-}

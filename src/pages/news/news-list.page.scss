@@ -1,0 +1,15 @@
+as-page-news-list {
+
+	ion-list {
+		ion-thumbnail {
+			img {
+				object-fit: cover;
+			}
+		}
+	}
+
+	.as-post-meta {
+		font-size: 12px;
+		opacity: 0.5;
+	}
+}

@@ -14,31 +14,26 @@
 
 
 <ion-content padding>
-  <h2>Ordered Data Snapshot</h2>
   <p></p>
   <h3>Name: {{this?.title}} <br></h3>
-  Email: {{this?.email}} <br>
-  Phone: {{this?.phoneNumber}} <br>
-  Phone: {{this?.phoneNumber}} <br>
+  <b>Email:</b> {{this?.email}} <br>
+  <b>Alternate Email: </b> {{this?.email2}} <br>
+  <b>Phone:</b> {{this?.phoneNumber}} <br>
   <h3>Garden Details</h3>
-  Started On: {{this?.startdate}} <br>
-  Garden Size: {{this?.numbeds}} {{this?.hardware}} Beds<br>
-
-    <h2>Client Details Push</h2>
-    <p></p>
-
-
-      <ion-list>
-        <ion-item *ngFor="let cd of clientDeets">
-      <!-- {{ profile.firstName }} {{ profile.lastName }}<br> -->
-        {{ cd }}
-
-        </ion-item>
-      </ion-list>
+  <b>First Planting:</b> {{this?.startdate}} <br>
+  <b>Garden Size:</b> {{this?.numbeds}} {{this?.hardware}} Avalows<br>
+  <b>Bed Maps:</b>
+  <br><img src="{{this?.bedmap1}}"/> <br>
+  <img src="{{this?.bedmap2}}"/> <br>
+<!-- {{ (fields | async)?.title }} -->
+<button ion-button (click)="icmsg()">Chat w/ Us!</button>
 </ion-content>
 
-<!-- {{ clientDeets.first }} {{ clientDeets.last }}
-Address: {{ clientDeets.address }} -->
-<!-- Zip: {{ clientDeets.Zip}} -->
-<!-- Garden size: {{ clientDeets.numbeds  clientDeets.size}}
-Start Date: {{ clientDeets.startdate}} -->
+
+  <!-- <ion-list>
+    <ion-item *ngFor="let cd of clientDeets">
+  {{ profile.firstName }} {{ profile.lastName }}<br>
+    {{ cd }}
+
+    </ion-item>
+  </ion-list> -->

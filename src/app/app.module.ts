@@ -5,9 +5,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+
 import { LoginPage } from '../pages/login/login';
 import { GardenPage } from '../pages/garden/garden';
+import { NewsModule } from '../pages/news/news.module';
 
 import { AuthService } from '../providers/auth/auth';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -18,26 +19,27 @@ import { config } from '../environments/environment.prod';
 import { Intercom } from '@ionic-native/intercom';
 import { DataProvider } from '../providers/data/data';
 
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     LoginPage,
-    GardenPage
+    GardenPage,
+
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config.fire),
+    NewsModule,
 
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     LoginPage,
     GardenPage
   ],

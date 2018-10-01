@@ -1,0 +1,20 @@
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>{{ item.title }}</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<div>
+		<ion-slides>
+			<ion-slide *ngIf="!!item.picture[0]">
+				<img src="{{item.picture[0].url}}"/>
+			</ion-slide>
+		</ion-slides>
+	</div>
+	<div class="news-item" padding>
+		<h1>{{ item.title }}</h1>
+		<ion-note item-end>{{ item.postedAt | date:'short'}}</ion-note>
+		<p>{{item.body}}</p>
+	</div>
+</ion-content>

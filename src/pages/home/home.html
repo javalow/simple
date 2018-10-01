@@ -7,14 +7,19 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
-  <br>
-  <button ion-button (click)="icmsg()">Intercom Chat</button>
+<ion-content>
+	<ion-grid>
+		<ion-row *ngFor="let tilePair of tiles">
+			<ion-col col-6 no-padding *ngFor="let tile of tilePair">
+				<ion-card class="tile" (click)="navigateTo(tile)">
+					<ion-card-content>
+						<ion-item>
+							<h1><ion-icon [name]="tile.icon"></ion-icon></h1>
+							<h2>{{tile.title}}</h2>
+						</ion-item>
+					</ion-card-content>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </ion-content>

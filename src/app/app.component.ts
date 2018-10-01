@@ -6,7 +6,7 @@ import { AuthService } from '../providers/auth/auth';
 
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { NewsListPage } from '../pages/news/news-list.page';
 import { LoginPage } from '../pages/login/login';
 import { GardenPage } from '../pages/garden/garden';
 
@@ -32,8 +32,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'leaf' },
-      { title: 'List', component: ListPage, icon: 'paper' },
-      { title: 'Garden', component: GardenPage, icon: 'ios-chatbubbles-outline' }
+      { title: 'Recipes & Tips', component: NewsListPage, icon: 'paper' },
+      { title: 'Garden Support', component: GardenPage, icon: 'ios-chatbubbles-outline' }
     ];
 
   }
