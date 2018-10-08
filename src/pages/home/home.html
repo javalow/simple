@@ -10,10 +10,10 @@
 <ion-content>
 	<ion-grid>
 		<ion-row *ngFor="let tilePair of tiles">
-			<ion-col col-6 no-padding *ngFor="let tile of tilePair">
+			<ion-col text-center col-6 no-padding *ngFor="let tile of tilePair">
 				<ion-card class="tile" (click)="navigateTo(tile)">
 					<ion-card-content>
-						<ion-item>
+						<ion-item text-center>
 							<h1><ion-icon [name]="tile.icon"></ion-icon></h1>
 							<h2>{{tile.title}}</h2>
 						</ion-item>

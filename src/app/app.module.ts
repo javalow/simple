@@ -18,6 +18,7 @@ import { config } from '../environments/environment.prod';
 
 import { Intercom } from '@ionic-native/intercom';
 import { DataProvider } from '../providers/data/data';
+import { Users } from '../pages/garden/profile'
 
 
 @NgModule({
@@ -31,7 +32,10 @@ import { DataProvider } from '../providers/data/data';
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      iconMode: 'ios',
+      pageTransition: 'ios-transition'
+    }),
     AngularFireModule.initializeApp(config.fire),
     NewsModule,
 
@@ -50,7 +54,8 @@ import { DataProvider } from '../providers/data/data';
 		AngularFireAuth,
 		AngularFireDatabase,
     Intercom,
-    DataProvider
+    DataProvider,
+    Users
   ]
 })
 export class AppModule {}

@@ -20,11 +20,12 @@ export class LoginPage {
   form: FormGroup;
   loginError: string;
   user: firebase.User;
+  uid;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private auth: AuthService,
-    // private auth: AngularFireAuth,
     fb: FormBuilder
     ) {
     this.form = fb.group({
@@ -49,6 +50,7 @@ export class LoginPage {
             () => this.navCtrl.setRoot(HomePage),
             error => this.loginError = error.message
           );
+
         }
 
 

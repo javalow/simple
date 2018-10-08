@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
-import { Users } from './profile';
+// import { Users } from './profile';
 import {  NavController, NavParams } from 'ionic-angular';
 import { Intercom } from '@ionic-native/intercom';
 import { AuthService } from '../../providers/auth/auth';
 import { DataProvider } from '../../providers/data/data';
-// import * as firebase from 'firebase';
+import * as firebase from 'firebase';
 // import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AngularFireDatabase, AngularFireObject, AngularFireAction } from '@angular/fire/database';
-import { Observable, of } from 'rxjs';
-import { map, catchError, tap, switchMap } from 'rxjs/operators';
-import { throwError } from "rxjs";
-import 'rxjs/add/observable/fromPromise';
+import { Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+// import { throwError } from "rxjs";
+// import 'rxjs/add/observable/fromPromise';
 
-// interface Person {
-//   title: String;
-//   numbeds: String;
-//   address: String;
-//   email: String;
-//   email2: String;
-//   hardware: String;
-//   bedmap1: String;
-//   bedmap2: String;
-//   phoneNumber: String;
-//   startdate: Date;
-// }
+interface Person {
+  title: String;
+  numbeds: String;
+  address: String;
+  email: String;
+  email2: String;
+  hardware: String;
+  bedmap1: String;
+  bedmap2: String;
+  phoneNumber: String;
+  startdate: Date;
+}
 
 
 @Component({
@@ -31,9 +31,41 @@ import 'rxjs/add/observable/fromPromise';
   templateUrl: 'garden.html',
 })
 export class GardenPage {
-  name = 'Firebase Data Test';
-public email$: Observable<string>;
-public person$: Observable<any>;
+  public items: any [] = [];
+  public itemRef;
+  public email$;
+  public cdQ4;
+
+  public fields;
+  public id: string="";
+  // public cdRef: firebase.database.Reference = firebase.database().ref('/ftuserprofiles/2a2a18f2-49e6-3daf-9208-ef3f67c15e12');
+
+  public clientDeets: any [] = [];
+  public userDeets: any [] = [];
+  public cdQ: AngularFireObject<any>;
+  public cdQ2;
+  public cdQ3;
+
+
+  public details;
+
+  uid1;
+  uid2;
+
+  private itemDetails: Observable<any[]>;
+  // public profile : Observable<Users>;
+  public person: Observable<AngularFireAction<any>>;
+  title: String;
+  numbeds: String;
+  address: String;
+  email: String;
+  email2: String;
+  hardware: String;
+  bedmap1: String;
+  bedmap2: String;
+  phoneNumber: String;
+  startdate: Date;
+
 
 
 
@@ -47,45 +79,9 @@ public person$: Observable<any>;
     private intercom: Intercom,
     private data: DataProvider,
     private db: AngularFireDatabase,
-    public users: Users
+    // public users: Users
   )
-    {}
-
-
-  ngOnInit() {
-
-    this.email$ = of(this.auth.getEmailOnly());
-    // this.email$ = this.auth.getEmailOnly();
-
-    this.person$ = this.getData();
-  }
-
-  getData(): Observable<any> {
-
-    return this.email$.pipe(
-        // switchMap returns a different observable for each emitted value by the source (this.email$)
-        switchMap(email => {
-          return this.db.list('ftuserprofiles', ref => // no need to use native firebase api, can be done with angularfire
-              ref.orderByChild('email')
-                 .equalTo(email)
-                 .limitToFirst(1))
-            .snapshotChanges()
-            .pipe(
-              map(actions => actions.map(action =>  {
-                const key = action.payload.key;
-                const data = action.payload.val();
-                return {key, ...data}
-              }))
-            )
-        }));
-  }
-
-  icmsg(){
-    this.intercom.displayMessenger();
-    console.log("Intercom display Messenger");
-  }
-
-}
+    {
       // this.getUID();
       //
       // console.log('cid from getUID-constructor : ' + this.uid2);
@@ -116,40 +112,40 @@ public person$: Observable<any>;
     // (items) => {
     //   console.log('Data with key:', items);
 
-    // }
+    }
 
-//     getUID() {
-//       this.email$ = this.auth.getEmailOnly();
-//       this.cdQ3 = firebase.database().ref('/ftuserprofiles').orderByChild('email').equalTo(this.email$);
-//       this.details = this.cdQ3.once('value').then((snapshot) => {
-//         this.userDeets = [];
-//         snapshot.forEach( snap => {
-//             this.uid2 = snap.key;
-//
-//                     console.log('cid from getUID-garden : ' + this.uid2);
-//
-//                     // console.log('details from getUID-garden : ' + this.details);
-//                     return false;
-//                   });
-//       });
-//       return this.uid2;
-//     }
-//
-// getData(id) {
-//   // this.getUID();
-//   // this.uid2;
-//   // console.log('cid from getdata : ' + this.uid2);
-//   this.cdQ = this.db.object('/ftuserprofiles/'+ this.id);
-//   this.person = this.cdQ.snapshotChanges().pipe(map(c => {
-//                     const data = c.payload.val();
-//                     const id = c.payload.key;
-//                     return { id, ...data };
-//     }));
-//
-//   // console.log('this.person : ', this.person);
-//   this.details = JSON.stringify(this.person);
-// }
-//     //
+    getUID() {
+      this.email$ = this.auth.getEmailOnly();
+      this.cdQ3 = firebase.database().ref('/ftuserprofiles').orderByChild('email').equalTo(this.email$);
+      this.details = this.cdQ3.once('value').then((snapshot) => {
+        this.userDeets = [];
+        snapshot.forEach( snap => {
+            this.uid2 = snap.key;
+
+                    console.log('cid from getUID-garden : ' + this.uid2);
+
+                    // console.log('details from getUID-garden : ' + this.details);
+                    return false;
+                  });
+      });
+      return this.uid2;
+    }
+
+getData(id) {
+  // this.getUID();
+  // this.uid2;
+  // console.log('cid from getdata : ' + this.uid2);
+  this.cdQ = this.db.object('/ftuserprofiles/'+ this.id);
+  this.person = this.cdQ.snapshotChanges().pipe(map(c => {
+                    const data = c.payload.val();
+                    const id = c.payload.key;
+                    return { id, ...data };
+    }));
+
+  // console.log('this.person : ', this.person);
+  this.details = JSON.stringify(this.person);
+}
+    //
     // console.log('this.cdQ : ', this.cdQ);
     // this.person = this.users.getData();
     // console.log('this.person : ', this.person);
@@ -157,32 +153,36 @@ public person$: Observable<any>;
 
 
 
-//   ionViewDidLoad() {
-//     console.log('ionViewDidLoad GardenPage');
-//     // this.getUID();
-//     // this.email$ = this.auth.getEmailOnly();
-//     // this.getData(this.uid2);
-//     this.getData('2a2a18f2-49e6-3daf-9208-ef3f67c15e1');
-//     // this.person = this.getFields();
-//     // this.cdQ4 = this.users.getData(this.uid2);
-//     // this.uid1 = JSON.parse(this.fields);
-//     // this.address = this.fields['address'];
-//     // this.title = this.fields.title;
-//     // console.log('title ' + this.title);
-//     // console.log('address ' + this.person['address']);
-//
-//     // this.uid1 = this.auth.getUID();
-//     //
-//     console.log(this.email$);
-//     // this.address = this.profile.address;
-//
-//     // console.log("title: " + this.fields.title);
-//     // console.log('auth uid1: '+ this.auth.getUID());
-//
-//
-// }
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad GardenPage');
+    // this.getUID();
+    // this.email$ = this.auth.getEmailOnly();
+    // this.getData(this.uid2);
+    this.getData('2a2a18f2-49e6-3daf-9208-ef3f67c15e1');
+    // this.person = this.getFields();
+    // this.cdQ4 = this.users.getData(this.uid2);
+    // this.uid1 = JSON.parse(this.fields);
+    // this.address = this.fields['address'];
+    // this.title = this.fields.title;
+    // console.log('title ' + this.title);
+    // console.log('address ' + this.person['address']);
+
+    // this.uid1 = this.auth.getUID();
+    //
+    console.log(this.email$);
+    // this.address = this.profile.address;
+
+    // console.log("title: " + this.fields.title);
+    // console.log('auth uid1: '+ this.auth.getUID());
 
 
+}
+
+icmsg(){
+  this.intercom.displayMessenger();
+  console.log("Intercom display Messenger");
+}
+}
 
 
 

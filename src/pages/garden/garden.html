@@ -5,7 +5,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Garden Info</ion-title>
+    <ion-title>Garden Details</ion-title>
 
   </ion-navbar>
 
@@ -14,19 +14,25 @@
 
 
 <ion-content padding>
-  <p></p>
-  <h3>Name: {{this?.title}} <br></h3>
-  <b>Email:</b> {{this?.email}} <br>
-  <b>Alternate Email: </b> {{this?.email2}} <br>
-  <b>Phone:</b> {{this?.phoneNumber}} <br>
+  <p><button ion-button full outline (click)="icmsg()">Garden Support Conversations</button></p>
+  <!-- <p><button ion-button round outline (click)="getUID()">Get UID</button></p> -->
+  <!-- <p><button ion-button round outline (click)="getData()">Get Data</button></p> -->
+  <!-- <h3>Name: {{this.fields['title'] | async }} <br></h3> -->
+  <b>Email:</b> {{details?.email | async | json}} <br>
+  <b>Alternate Email: </b> {{person?.email2 | json}} <br>
+  <b>Phone:</b> {{this.details?.phoneNumber | async | json}} <br>
+  <b>Address:</b> {{this.person?.address | json }} <br>
   <h3>Garden Details</h3>
-  <b>First Planting:</b> {{this?.startdate}} <br>
-  <b>Garden Size:</b> {{this?.numbeds}} {{this?.hardware}} Avalows<br>
+  <b>First Planting:</b> {{this.person?.startdate | date }} <br>
+  <b>Garden Size:</b> {{this.person?.numbeds}} {{this.person?.hardware}} Avalows<br>
   <b>Bed Maps:</b>
-  <br><img src="{{this?.bedmap1}}"/> <br>
-  <img src="{{this?.bedmap2}}"/> <br>
+  <!-- <br><img src="{{this?.bedmap1}}"/> <br>
+  <img src="{{this?.bedmap2}}"/> <br> -->
 <!-- {{ (fields | async)?.title }} -->
-<button ion-button (click)="icmsg()">Chat w/ Us!</button>
+<br>
+
+<h1>{{ uid2 }}</h1>
+<h3><pre>{{ person$ | async | json }}</pre></h3>
 </ion-content>
 
 

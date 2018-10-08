@@ -32,8 +32,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'leaf' },
-      { title: 'Recipes & Tips', component: NewsListPage, icon: 'paper' },
-      { title: 'Garden Support', component: GardenPage, icon: 'ios-chatbubbles-outline' }
+      { title: 'Recipes & Tips', component: NewsListPage, icon: 'flask' },
+      { title: 'Garden Details', component: GardenPage, icon: 'analytics' }
     ];
 
   }
@@ -85,4 +85,8 @@ export class MyApp {
   		this.auth.signOut();
   		this.nav.setRoot(LoginPage);
   	}
+    icmsg(){
+      this.intercom.displayMessenger();
+      console.log("Intercom display Messenger");
+    }
 }

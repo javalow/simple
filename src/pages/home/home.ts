@@ -52,15 +52,15 @@ export class HomePage {
   			{
   				title: 'Your Garden',
   				path: 'user-profiles',
-  				icon: 'ios-chatbubbles-outline',
+  				icon: 'analytics',
   				component: GardenPage
   			}
   		],
   			[
   				{
-  					title: 'Garden Recipes & Tips',
+  					title: 'Avalow Updates',
   					path: 'news',
-  					icon: 'paper',
+  					icon: 'flask',
   					component: NewsListPage
   				},
   				// {

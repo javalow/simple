@@ -11,6 +11,7 @@
         <ion-icon [name]="p.icon" item-left></ion-icon>
         {{p.title}}
       </button>
+    <button ion-button full outline (click)="icmsg()"><ion-icon [name]='ios-chatbubbles-outline' item-left></ion-icon>Garden Support Chat</button>
       <ion-list-header *ngIf="auth.getEmail()">{{auth.getEmail()}}</ion-list-header>
 
       			<ion-item (click)="logout()" *ngIf="auth.authenticated">
